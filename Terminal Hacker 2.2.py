@@ -109,18 +109,18 @@ def cmdloop(prompt=f"{COLORS['red']}TH{COLORS['reset']}", mode="none"):
                     subprocess.run([psexec_path] + arguments.split())
                 else:
                     print(f"{COLORS['red']}PSExec is not available. Use 'get psexec' to download it.{COLORS['reset']}")
-        elif command.startswith("install"):
-            arguments = command[len("install"):].strip()
+        elif command.startswith("run"):
+            arguments = command[len("run"):].strip()
             temp_flag = "--temp" in arguments
             if temp_flag:
                 arguments = arguments.replace("--temp", "").strip()
 
             if not arguments:
-                print(f"{COLORS['red']}ERROR: Please provide a file path or URL to install.{COLORS['reset']}")
+                print(f"{COLORS['red']}ERROR: Please provide a file path or URL to run.{COLORS['reset']}")
                 return
 
             if arguments.startswith("http://") or arguments.startswith("https://"):
-                print(f"{COLORS['yellow']}Downloading and installing from URL: {arguments}{COLORS['reset']}")
+                print(f"{COLORS['yellow']}Downloading and Running from URL: {arguments}{COLORS['reset']}")
                 file_name = arguments.split("/")[-1]
                 download_path = os.path.join(os.path.dirname(CONFIG_PATH), file_name)
                 subprocess.run([
