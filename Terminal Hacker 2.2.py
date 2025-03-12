@@ -3,8 +3,6 @@ import os
 import sys
 import json
 
-
-
 COLORS = {
     "red": "\033[91m",
     "green": "\033[92m",
@@ -142,17 +140,18 @@ def cmdloop(prompt=f"{COLORS['red']}TH{COLORS['reset']}", mode="none"):
                 subprocess.run(arguments, shell=True)
             else:
                 print(f"{COLORS['red']}ERROR: Invalid file path or URL.{COLORS['reset']}")
-
+        elif command == "elevate":
+            
         elif command == "mode":
             print("+----------------------+-------------------------------------------------+")
             print("| Mode                 | Description                                     |")
             print("+----------------------+-------------------------------------------------+")
             print("| os.system            | Command from the Python library OS              |")
-            print("| powershell           | Runs commands with PowerShell                   |")
+            print("| pwsh                 | Runs commands with PowerShell                   |")
             print("| both                 | Uses os.system and PowerShell                   |")
             print("+----------------------+-------------------------------------------------+")
             mode_input = input("Which mode do you want to use? ").strip().lower()
-            if mode_input in ["os.system", "powershell", "both"]:
+            if mode_input in ["os.system", "pwsh", "both"]:
                 mode = mode_input
                 prompt = f"{COLORS.get(mode_input.split('.')[0], COLORS['red'])}{mode_input.upper()}{COLORS['reset']}"
                 config = read_config() or {}
@@ -161,7 +160,7 @@ def cmdloop(prompt=f"{COLORS['red']}TH{COLORS['reset']}", mode="none"):
             else:
                 print(f"Invalid mode: {mode_input}")
         else:
-            if mode == "powershell":
+            if mode == "pwsh":
                 subprocess.run(["powershell", "-Command", command])
             elif mode == "os.system":
                 os.system(command)
@@ -181,11 +180,11 @@ def setup_terminal_hacker():
         print("| Mode                     | Description                                 |")
         print("+--------------------------+---------------------------------------------+")
         print("| os.system                | Command from the Python library OS          |")
-        print(f"| powershell {COLORS['green']}(recommended){COLORS['reset']} | Runs commands with PowerShell               |")
+        print(f"| pwsh       {COLORS['green']}(recommended){COLORS['reset']} | Runs commands with PowerShell               |")
         print("| both                     | Uses os.system and PowerShell               |")
         print("+--------------------------+---------------------------------------------+")
         mode_input = input("Which mode do you want to use? ").strip().lower()
-        if mode_input in ["os.system", "powershell", "both"]:
+        if mode_input in ["os.system", "pwsh", "both"]:
             config = {'mode': mode_input}
             write_config(config)
             cmdloop(f"{COLORS.get(mode_input.split('.')[0], COLORS['red'])}{mode_input.upper()}{COLORS['reset']}", mode_input)
